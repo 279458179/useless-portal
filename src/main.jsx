@@ -5,6 +5,7 @@ import { uselessSites } from './sites.js'
 
 const STORAGE_KEY = 'useless-portal-remaining-sites'
 const desktopOnlySites = new Set(['https://shovelandshoot.com/'])
+const fallbackSite = uselessSites[0]
 
 function isDesktopPointer() {
   if (typeof window === 'undefined' || !window.matchMedia) return true
@@ -39,11 +40,10 @@ function pickSite(remainingSites) {
 }
 
 function App() {
-  const [clicks, setClicks] = useState(0)
   const [lastSite, setLastSite] = useState(null)
   const siteCount = useMemo(() => getAvailableSites().length, [])
 
-  const launchRandomSite = () => {
+  const prepareRandomLaunch = (event) => {
     const availableSites = getAvailableSites()
     const { site, nextSites } = pickSite(availableSites)
     const savedSites = nextSites.length > 0 ? nextSites : getAvailableSites()
@@ -53,9 +53,8 @@ function App() {
       JSON.stringify(savedSites.map((item) => item.url)),
     )
 
-    setClicks((value) => value + 1)
     setLastSite(site)
-    window.open(site.url, '_blank', 'noopener,noreferrer')
+    event.currentTarget.href = site.url
   }
 
   return (
@@ -71,10 +70,16 @@ function App() {
           no login, no productivity theater.
         </p>
 
-        <button className="launch-button" type="button" onClick={launchRandomSite}>
+        <a
+          className="launch-button"
+          href={fallbackSite.url}
+          target="_blank"
+          rel="noopener"
+          onClick={prepareRandomLaunch}
+        >
           Take me somewhere pointless
           <span aria-hidden="true">-&gt;</span>
-        </button>
+        </a>
 
         <div className="signal-row" aria-label="Site stats">
           <span>{siteCount}+ destinations</span>
