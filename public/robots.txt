@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://useless-portal.vercel.app/sitemap.xml
+Sitemap: https://useless.myg2ray.top/sitemap.xml

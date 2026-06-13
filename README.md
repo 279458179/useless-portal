@@ -29,7 +29,7 @@ This project is a static Vite app and can be deployed directly to Vercel.
 After deployment, verify the production URL in Google Search Console and submit:
 
 ```text
-https://useless-portal.vercel.app/sitemap.xml
+https://useless.myg2ray.top/sitemap.xml
 ```
 
 Core checks implemented from Google's SEO Starter Guide:
